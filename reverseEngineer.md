@@ -326,7 +326,7 @@ In summary, the following actions occur:
 var passport = require("passport");
 ```
 
-2. Configure LocalStrategy on 'passport-local'. 'Passport-local' is a module of 'passport' used to authenticate users via a username and password.
+2. Configure 'LocalStrategy' on 'passport-local'. 'Passport-local' is a module of 'passport' used to authenticate users via a username and password.
 
 ```
 var LocalStrategy = require("passport-local").Strategy;
@@ -338,7 +338,7 @@ var LocalStrategy = require("passport-local").Strategy;
 var db = require("../models");
 ```
 
-4. Tell passport we want to use a Local Strategy to login with a username/email and password:
+4. Tell 'passport' we want to use a 'LocalStrategy' to login with a username/email and password:
 
 ```
 passport.use(new LocalStrategy(
@@ -422,19 +422,19 @@ Directive in ECMAScript 5 to indicate that code should be executed in "strict mo
 'use strict';
 ```
 
-Import node package fs. File System (fs) allows for the user to work with the file system of the computer. Common uses of the fs module include reading, creating, updating, deleting, and renaming files.
+Import node package 'fs'. File System (fs) allows for the user to work with the file system of the computer. Common uses of the fs module include reading, creating, updating, deleting, and renaming files.
 
 ```
 var fs        = require('fs');
 ```
 
-Import node package path. Per the nodejs.org documentation, the path module provides utilities for working with file and directory paths.
+Import node package 'path'. Per the nodejs.org documentation, the 'path' module provides utilities for working with file and directory paths.
 
 ```
 var path      = require('path');
 ```
 
-Import Sequelize. Sequelize at its core is an Object-Relational Mapper (ORM) meaning that it maps object syntax onto database schemas.
+Import 'Sequelize'. 'Sequelize' at its core is an Object-Relational Mapper (ORM) meaning that it maps object syntax onto database schemas.
 
 ```
 var Sequelize = require('sequelize');
@@ -450,13 +450,13 @@ Description about user.js goes here
 
 # node_modules
 
-node_modules is a folder that contains all of the npm libraries downloaded. It is best practice to exclude it from version control (see .gitignore section below) since it can be easily recreated using the information listed in the package.json.
+'node_modules' is a folder that contains all of the npm libraries downloaded. It is best practice to exclude it from version control (see .gitignore section below) since it can be easily recreated using the information listed in the package.json.
 
 ---
 
 # public
 
-The public folder contains all the static files (e.g., HTML, CSS, JS, images) that are referenced in the program.
+The 'public' folder contains all the static files (e.g., HTML, CSS, JS, images) that are referenced in the program.
 
 ## login.html
 
