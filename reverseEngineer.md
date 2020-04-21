@@ -409,3 +409,17 @@ passport.deserializeUser(function(obj, cb) {
 ```
 module.exports = passport;
 ```
+
+---
+
+# models
+
+## index.js
+
+Description about index.js goes here
+
+---
+
+## user.js
+
+Description about user.js goes here
