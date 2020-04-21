@@ -456,7 +456,7 @@ node_modules is a folder that contains all of the npm libraries downloaded. It i
 
 # public
 
-Description about public goes here
+The public folder contains all the static files (e.g., HTML, CSS, JS, images) that are referenced in the program.
 
 ## login.html
 
