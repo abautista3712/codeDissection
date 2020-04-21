@@ -423,3 +423,79 @@ Description about index.js goes here
 ## user.js
 
 Description about user.js goes here
+
+---
+
+# node_modules
+
+Description about node_modules goes here
+
+---
+
+# public
+
+Description about public goes here
+
+## login.html
+
+Description about login.html goes here
+
+---
+
+## members.html
+
+Description about members.html goes here
+
+---
+
+## signup.html
+
+Description about signup.html goes here
+
+---
+
+## js
+
+### login.js
+
+Description about login.js goes here
+
+---
+
+### members.js
+
+Description about members.js goes here
+
+---
+
+### signup.js
+
+Description about signup.js goes here
+
+---
+
+## stylesheets
+
+### style.css
+
+Description about style.css goes here
+
+---
+
+# routes
+
+## api-routes.js
+
+Description about api-routes.js goes here
+
+---
+
+## html-routes.js
+
+Description about html-routes.js goes here
+
+---
+
+# .gitignore
+
+Description about .gitignore goes here
