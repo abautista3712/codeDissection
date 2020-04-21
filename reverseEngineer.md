@@ -527,4 +527,10 @@ Description about html-routes.js goes here
 
 # .gitignore
 
-Description about .gitignore goes here
+'.gitignore' is a file that can exclude certain files from being tracked by version control (i.e., GitHub). File names written in '.gitignore' will not be tracked for changes and will ultimately not be pushed up to GitHub.
+
+In this particular case, 'node_modules' is excluded from version control since it can be easily recreated using the information provided in package.json.
+
+```
+node_modules
+```
