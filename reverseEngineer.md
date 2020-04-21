@@ -233,7 +233,7 @@ db.sequelize.sync().then(function() {
 
 ## config.json
 
-This file is used to
+'config.json' is used to specify values used to connect to three different server connections.
 
 ---
 
@@ -241,12 +241,171 @@ This file is used to
 
 ### isAuthenticated
 
-This file
+'isAuthenticated.js' is a custom middleware used to restrict the routes can visit if they are not logged in.
+
+If logged in, the user can continue to the restricted route:
+
+```
+module.exports = function(req, res, next) {
+    if (req.user) {
+    return next();
+  }
+```
+
+If the user is not logged in, the middleware will redirect the user back to the login page:
+
+```
+return res.redirect("/");
+};
+```
 
 ---
 
 ## passport.js
 
-This file
+'passport.js' is an authentication middleware for node.js. This file is already notated on the file provided:
 
----
+```
+var passport = require("passport");
+var LocalStrategy = require("passport-local").Strategy;
+
+var db = require("../models");
+
+// Telling passport we want to use a Local Strategy. In other words, we want login with a username/email and password
+passport.use(new LocalStrategy(
+  // Our user will sign in using an email, rather than a "username"
+  {
+    usernameField: "email"
+  },
+  function(email, password, done) {
+    // When a user tries to sign in this code runs
+    db.User.findOne({
+      where: {
+        email: email
+      }
+    }).then(function(dbUser) {
+      // If there's no user with the given email
+      if (!dbUser) {
+        return done(null, false, {
+          message: "Incorrect email."
+        });
+      }
+      // If there is a user with the given email, but the password the user gives us is incorrect
+      else if (!dbUser.validPassword(password)) {
+        return done(null, false, {
+          message: "Incorrect password."
+        });
+      }
+      // If none of the above, return the user
+      return done(null, dbUser);
+    });
+  }
+));
+
+// In order to help keep authentication state across HTTP requests,
+// Sequelize needs to serialize and deserialize the user
+// Just consider this part boilerplate needed to make it all work
+passport.serializeUser(function(user, cb) {
+  cb(null, user);
+});
+
+passport.deserializeUser(function(obj, cb) {
+  cb(null, obj);
+});
+
+// Exporting our configured passport
+module.exports = passport;
+
+```
+
+In summary, the following actions occur:
+
+1. The npm package 'passport' is imported. Passport is an Express-compatible authentication middleware.
+
+```
+var passport = require("passport");
+```
+
+2. Configure LocalStrategy on 'passport-local'. 'Passport-local' is a module of 'passport' used to authenticate users via a username and password.
+
+```
+var LocalStrategy = require("passport-local").Strategy;
+```
+
+3. Import 'models' folder:
+
+```
+var db = require("../models");
+```
+
+4. Tell passport we want to use a Local Strategy to login with a username/email and password:
+
+```
+passport.use(new LocalStrategy(
+```
+
+5. Username is assigned to be an e-mail:
+
+```
+  {
+    usernameField: "email"
+  },
+    function(email, password, done) {
+```
+
+6. Code that starts when a user tries to sign in after which a promise is called. The promise has three cases (see 7-10 below).
+
+```
+db.User.findOne({
+      where: {
+        email: email
+      }
+    }).then(function(dbUser) {
+```
+
+7. The first case will run if there is no user with the given e-mail. The message "Incorrect email." will be returned:
+
+```
+if (!dbUser) {
+        return done(null, false, {
+          message: "Incorrect email."
+        });
+      }
+```
+
+8. The second case will run if there is a user with a given e-mail but the password is incorrect:
+
+```
+ else if (!dbUser.validPassword(password)) {
+        return done(null, false, {
+          message: "Incorrect password."
+        });
+      }
+```
+
+9. The third case will run if both the user e-mail exists and the password is correct. User is returned.
+
+```
+     return done(null, dbUser);
+    });
+  }
+));
+```
+
+10. Sequelize is used to serialize and deserialize the user to help keep authentication state across HTTP requests:
+
+```
+passport.serializeUser(function(user, cb) {
+  cb(null, user);
+});
+
+passport.deserializeUser(function(obj, cb) {
+  cb(null, obj);
+});
+```
+
+11. 'Passport' is exported
+
+```
+module.exports = passport;
+```
