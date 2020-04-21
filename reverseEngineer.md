@@ -450,7 +450,7 @@ Description about user.js goes here
 
 # node_modules
 
-Description about node_modules goes here
+node_modules is a folder that contains all of the npm libraries downloaded. It is best practice to exclude it from version control (see .gitignore section below) since it can be easily recreated using the information listed in the package.json.
 
 ---
 
