@@ -500,7 +500,14 @@ Description about signup.js goes here
 
 ### style.css
 
-Description about style.css goes here
+'form.signup' and 'form.login' are styled and given a margin on top of 50px:
+
+```
+form.signup,
+form.login {
+  margin-top: 50px;
+}
+```
 
 ---
 
