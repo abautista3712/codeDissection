@@ -416,7 +416,29 @@ module.exports = passport;
 
 ## index.js
 
-Description about index.js goes here
+Directive in ECMAScript 5 to indicate that code should be executed in "strict mode":
+
+```
+'use strict';
+```
+
+Import node package fs. File System (fs) allows for the user to work with the file system of the computer. Common uses of the fs module include reading, creating, updating, deleting, and renaming files.
+
+```
+var fs        = require('fs');
+```
+
+Import node package path. Per the nodejs.org documentation, the path module provides utilities for working with file and directory paths.
+
+```
+var path      = require('path');
+```
+
+Import Sequelize. Sequelize at its core is an Object-Relational Mapper (ORM) meaning that it maps object syntax onto database schemas.
+
+```
+var Sequelize = require('sequelize');
+```
 
 ---
 
