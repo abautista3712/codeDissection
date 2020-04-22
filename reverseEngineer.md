@@ -440,6 +440,73 @@ Import 'Sequelize'. 'Sequelize' at its core is an Object-Relational Mapper (ORM)
 var Sequelize = require('sequelize');
 ```
 
+Set the variable 'basename' as the last portion of the file path for 'module.filename':
+
+```
+var basename  = path.basename(module.filename);
+```
+
+Define the variable 'env' to be 'process.env.NODE_ENV' otherwise it is set to 'development'.
+
+More specifically, 'process.env' is a global variable that checks the system environment during runtime.
+
+Additionally, 'NODE_ENV' will check whether the particular environment is a 'production' or 'development' environment at start up otherwise the environment will be set to 'development' by default.
+
+```
+var env       = process.env.NODE_ENV || 'development';
+```
+
+Import the 'config.json' file and configure environment.
+
+Particularly, '\_\_dirname' returns the absolute path of the directory where the currently executing file is (i.e., index.js). The absolute path is then used to reference the path to the 'config.json' file which is then configured to the enviornment variable.
+
+```
+var config    = require(__dirname + '/../config/config.json')[env];
+```
+
+An empty object is created under the variable 'db':
+
+```
+var db        = {};
+```
+
+The configuration environment is established using Sequelize.
+
+'config.use_env_variable' will check to see if an environment variable is set. If it is, the settings for that environment variable will be used. Alternatively, the settings will be used as provided by the environment used.
+
+```
+if (config.use_env_variable) {
+  var sequelize = new Sequelize(process.env[config.use_env_variable]);
+} else {
+  var sequelize = new Sequelize(config.database, config.username, config.password, config);
+}
+```
+
+The models are read and imported.
+
+'fs.readdirSync(\_\_dirname)' reads the absolute path of directory that 'index.js'
+
+```
+fs.readdirSync(__dirname)
+```
+
+The models are then filtered to make sure that there are files to read, the file is not the 'index.js' file, and that the file ends in '.js':
+
+```
+.filter(function(file) {
+    return (file.indexOf('.') !== 0) && (file !== basename) && (file.slice(-3) === '.js');
+  })
+```
+
+The filtered models are then imported into the database:
+
+```
+.forEach(function(file) {
+    var model = sequelize['import'](path.join(__dirname, file));
+    db[model.name] = model;
+  });
+```
+
 ---
 
 ## user.js
