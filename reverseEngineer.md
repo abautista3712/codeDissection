@@ -786,7 +786,22 @@ Description about login.js goes here
 
 ### members.js
 
-Description about members.js goes here
+This short piece of code has two primary functions:
+
+1. jQuery waits until the DOM has been loaded before continuing:
+
+```
+$(document).ready(function() {
+```
+
+2. As already notated in the file provided, the file will run a GET request to obtain which user is logged in and update that information onto the HTML:
+
+```
+$.get("/api/user_data").then(function(data) {
+    $(".member-name").text(data.email);
+  });
+});
+```
 
 ---
 
