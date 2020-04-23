@@ -717,7 +717,9 @@ The page is styled with both Bootstrap and an external stylesheet. Additionally,
 
 ## signup.html
 
-Description about signup.html goes here
+'signup.html' is the page the user encounters when trying to signup for an account. Similar to 'login.html', this file contains a form with two fields: one field for e-mail and one field for password. Once completed, the user can create a new account by pressing the 'submit' button. Alternatively, the user can press the 'login' button if they already have an account registered.
+
+The page is styled with both Bootstrap and an external stylesheet. Additionally, jQuery is used and references the use of 'js/signup.js':
 
 ---
 
