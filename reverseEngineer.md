@@ -434,7 +434,7 @@ Import node package 'path'. Per the nodejs.org documentation, the 'path' module 
 var path      = require('path');
 ```
 
-Import 'Sequelize'. 'Sequelize' at its core is an Object-Relational Mapper (ORM) meaning that it maps object syntax onto database schemas.
+Import 'Sequelize'. 'Sequelize' at its core is an Object-Relational Mapper (ORM) meaning that it maps object syntax onto database schemas. 'Sequelize' (uppercase) references the standard library.
 
 ```
 var Sequelize = require('sequelize');
@@ -505,6 +505,31 @@ The filtered models are then imported into the database:
     var model = sequelize['import'](path.join(__dirname, file));
     db[model.name] = model;
   });
+```
+
+Call up each filtered model in the database (i.e., user.js) and call its 'associate' function if it exists.
+
+```
+Object.keys(db).forEach(function(modelName) {
+  if (db[modelName].associate) {
+    db[modelName].associate(db);
+  }
+});
+```
+
+Two sequelize objects are created and brought into the db variable.
+
+One 'sequelize' (lowercase) references our connection to the db whereas the other 'Sequelize' (uppercase) references the standard library:
+
+```
+db.sequelize = sequelize;
+db.Sequelize = Sequelize;
+```
+
+The 'db' is then exported:
+
+```
+module.exports = db;
 ```
 
 ---
