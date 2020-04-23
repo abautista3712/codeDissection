@@ -536,7 +536,66 @@ module.exports = db;
 
 ## user.js
 
-Description about user.js goes here
+'user.js' is already notated in the provided folder. In summary, the following actions occur:
+
+1. The npm package bcrypt is imported. 'bcrypt' is a library that helps with password hashing:
+
+```
+var bcrypt = require("bcryptjs");
+```
+
+2. 'User' model is created. The specifications of the 'User' model are described in 3 and 4 below:
+
+```
+module.exports = function(sequelize, DataTypes) {
+  var User = sequelize.define("User", {
+```
+
+3. The e-mail is a string, cannot be null, must be unique, and must be a proper e-mail before creation:
+
+```
+email: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      unique: true,
+      validate: {
+        isEmail: true
+      }
+    },
+```
+
+4. The password is a string and cannot be null:
+
+```
+password: {
+      type: DataTypes.STRING,
+      allowNull: false
+    }
+  });
+```
+
+5. A custom method is created for our 'User' model. The model will compare the unhashed password inputted by the user and check it against what is registered in the db
+
+```
+User.prototype.validPassword = function(password) {
+    return bcrypt.compareSync(password, this.password);
+  };
+```
+
+6. A hook is added that will automatically hash the password before a User is created:
+
+```
+User.addHook("beforeCreate", function(user) {
+    user.password = bcrypt.hashSync(user.password, bcrypt.genSaltSync(10), null);
+  });
+```
+
+7. The 'User' model is then returned:
+
+```
+  return User;
+};
+```
 
 ---
 
