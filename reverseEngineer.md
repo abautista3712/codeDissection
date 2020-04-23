@@ -611,7 +611,9 @@ The 'public' folder contains all the static files (e.g., HTML, CSS, JS, images) 
 
 ## login.html
 
-Description about login.html goes here
+'login.html' is the HTML page that the user encounters when first trying to log into the page.
+
+'login.html' primarily consists of a form that has two fields: one field for e-mail address and one field for password. Once both the e-mail and password fields have been completed, the user has the option to press a button to login. The user can also alternatively click a different button to sign up for an account without filling in the form.
 
 ---
 
