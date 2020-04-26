@@ -780,7 +780,74 @@ The page is styled with both Bootstrap and an external stylesheet. Additionally,
 
 ### login.js
 
-Description about login.js goes here
+'login.js' is already notated but, in summary, the following actions occur:
+
+1. jQuery waits until the DOM is loaded before continuing:
+
+```
+$(document).ready(function() {
+```
+
+2. Variables are assigned to easily target and refer to our form and inputs:
+
+```
+var loginForm = $("form.login");
+var emailInput = $("input#email-input");
+var passwordInput = $("input#password-input");
+```
+
+3. When the form is completed, the input is validated to check if there is an e-mail and password entered. If 'userData' is neither an email nor a password, nothing is returned:
+
+```
+loginForm.on("submit", function(event) {
+    event.preventDefault();
+    var userData = {
+      email: emailInput.val().trim(),
+      password: passwordInput.val().trim()
+    };
+
+    if (!userData.email || !userData.password) {
+      return;
+    }
+```
+
+4. If an e-mail and password are properly registered, the form is cleared out by the 'loginUser' function:
+
+```
+ loginUser(userData.email, userData.password);
+    emailInput.val("");
+    passwordInput.val("");
+  });
+```
+
+5. 'loginUser' does a POST request to the '/api/login' route:
+
+```
+function loginUser(email, password) {
+    $.post("/api/login", {
+      email: email,
+      password: password
+    })
+```
+
+6. When the POST request is successful, the user is redirected to the '/members' page:
+
+```
+.then(function() {
+        window.location.replace("/members");
+```
+
+7. If the POST request incurs an error, the error is logged:
+
+```
+ })
+      .catch(function(err) {
+        console.log(err);
+      });
+  }
+});
+
+```
 
 ---
 
