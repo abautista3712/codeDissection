@@ -966,7 +966,74 @@ form.login {
 
 ## api-routes.js
 
-Description about api-routes.js goes here
+This section is already notated however, in summary, the following actions occur:
+
+1. The 'models' and 'passport' are required as configured:
+
+```
+var db = require("../models");
+var passport = require("../config/passport");
+```
+
+2. Using the local strategy on 'passport.authenticate', the login credentials are checked for validity. If valid, the user will be redirected to the members page. If invalid, the user will be sent an error:
+
+```
+app.post("/api/login", passport.authenticate("local"), function(req, res) {
+    res.json(req.user);
+  });
+```
+
+3. The user's password is hashed and stored via the Sequelize User Model. If the 'User' is created successfully, the user is redirected to the 'login' page.
+
+```
+app.post("/api/signup", function(req, res) {
+    db.User.create({
+      email: req.body.email,
+      password: req.body.password
+    })
+      .then(function() {
+        res.redirect(307, "/api/login");
+      })
+```
+
+4. If the 'User' is not created successfully, an error is returned:
+
+```
+  .catch(function(err) {
+        res.status(401).json(err);
+      });
+  });
+```
+
+5. Route for logging the user out. Once singed out, the user is redirected to the home route:
+
+```
+app.get("/logout", function(req, res) {
+    req.logout();
+    res.redirect("/");
+  });
+```
+
+6. Route for getting data about our user to be used client side. If the user is not logged in, an empty object is returned:
+
+```
+app.get("/api/user_data", function(req, res) {
+    if (!req.user) {
+      res.json({});
+```
+
+7. If the user is logged in, the user's e-mail and id are returned:
+
+```
+ } else {
+   res.json({
+        email: req.user.email,
+        id: req.user.id
+      });
+    }
+  });
+};
+```
 
 ---
 
