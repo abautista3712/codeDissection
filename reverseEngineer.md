@@ -1039,7 +1039,67 @@ app.get("/api/user_data", function(req, res) {
 
 ## html-routes.js
 
-Description about html-routes.js goes here
+This section is already notated however, in summary, the following actions occur:
+
+1. 'path' is required to use relative routes in our HTML files:
+
+```
+var path = require("path");
+```
+
+2. 'isAuthenticated' middleware is required to check if a user is logged in:
+
+```
+var isAuthenticated = require("../config/middleware/isAuthenticated");
+```
+
+3. Routes are exported:
+
+```
+module.exports = function(app){
+```
+
+4. The home route is defined. If the user already has an account, the user is redirected to the '/members' page.
+
+```
+ app.get("/", function(req, res) {
+   if (req.user) {
+      res.redirect("/members");
+    }
+```
+
+If the user does not have an account, they are redirected to the 'signup' page:
+
+```
+  res.sendFile(path.join(__dirname, "../public/signup.html"));
+  });
+```
+
+5. The '/login' route is defined. If the user already has an account, the user is redirected to the 'members' page:
+
+```
+app.get("/login", function(req, res) {
+  if (req.user) {
+      res.redirect("/members");
+    }
+```
+
+If the user does not have an account, they are redirected to the 'login' page:
+
+```
+ res.sendFile(path.join(__dirname, "../public/login.html"));
+  });
+```
+
+6. 'isAuthenticated' middleware is added to the '/members' route. If a user who is not logged in tries to access the route, they will be redirected to the 'signup' page:
+
+```
+app.get("/members", isAuthenticated, function(req, res) {
+    res.sendFile(path.join(__dirname, "../public/members.html"));
+  });
+
+};
+```
 
 ---
 
