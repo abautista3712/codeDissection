@@ -874,7 +874,76 @@ $.get("/api/user_data").then(function(data) {
 
 ### signup.js
 
-Description about signup.js goes here
+This section is also already notated however, in summary, the following actions occur:
+
+1. jQuery waits until the DOM is loaded before continuing:
+
+```
+$(document).ready(function() {
+```
+
+2. Variables are assigned and give reference to our form and inputs:
+
+```
+var signUpForm = $("form.signup");
+  var emailInput = $("input#email-input");
+  var passwordInput = $("input#password-input");
+```
+
+3. When the form is submitted, the input is validated for an e-mail and password. If the input is not an e-mail nor a password, nothing is returned:
+
+```
+signUpForm.on("submit", function(event) {
+    event.preventDefault();
+    var userData = {
+      email: emailInput.val().trim(),
+      password: passwordInput.val().trim()
+    };
+
+    if (!userData.email || !userData.password) {
+      return;
+    }
+```
+
+4. Given a valid e-mail and password, 'signUpUser' is run and the form is cleared out:
+
+```
+ signUpUser(userData.email, userData.password);
+    emailInput.val("");
+    passwordInput.val("");
+  });
+```
+
+5. 'signUpUser' function runs a POST request and POSTs to the '/api/signup' route:
+
+```
+function signUpUser(email, password) {
+    $.post("/api/signup", {
+      email: email,
+      password: password
+    })
+```
+
+6. When the POST request is successful, the user is redirected to the '/members' page:
+
+```
+ .then(function(data) {
+        window.location.replace("/members");
+```
+
+7. When the POST request gives an error, a bootstrap alert is thrown:
+
+```
+     })
+      .catch(handleLoginErr);
+  }
+
+  function handleLoginErr(err) {
+    $("#alert .msg").text(err.responseJSON);
+    $("#alert").fadeIn(500);
+  }
+});
+```
 
 ---
 
